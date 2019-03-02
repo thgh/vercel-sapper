@@ -1,0 +1,15 @@
+{
+  "name": "now-sapper",
+  "version": "0.21.0",
+  "license": "MIT",
+  "scripts": {
+    "pub": "git add -A && yarn version --minor && npm publish"
+  },
+  "dependencies": {
+    "@now/node-bridge": "^0.1.10",
+    "fs-extra": "7.0.1"
+  },
+  "peerDependencies": {
+    "@now/build-utils": ">=0.0.1"
+  }
+}
