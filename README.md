@@ -3,19 +3,19 @@
 Your Sapper project must be adapted to work with Zeit Now v2, see https://github.com/thgh/sapper-template/commit/220307c800525633063df3e3373bc76d0e62cd86
 
 For Express, the instance must be exported in `src/server.js`
-```
+```js
 const app = express()
 export default app
 ```
 
 For Polka, the handler must be exported in `src/server.js`
-```
+```js
 const app = polka()
 export default app.handler
 ```
 
 Example `now.json`
-```
+```json
 {
   "version": 2,
   "builds": [
@@ -29,7 +29,7 @@ Example `now.json`
 ```
 
 Recommended ignore:
-```
+```bash
 # .nowignore
 *
 !static
