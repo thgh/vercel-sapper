@@ -39,20 +39,6 @@ const { Bridge } = require('./bridge.js');
 const fs = require('fs');
 const path = require('path');
 
-var walkSync = function(dir, filelist) {
-                files = fs.readdirSync(dir);
-            filelist = filelist || [];
-            files.forEach(function(file) {
-                if (fs.statSync(path.join(dir, file)).isDirectory()) {
-                    filelist = walkSync(path.join(dir, file), filelist);
-                }
-                else {
-                    filelist.push(path.join(dir, file));
-                }
-            });
-            return filelist;
-        };
-
 const bridge = new Bridge();
 bridge.port = 3000;
 let listener;
@@ -66,17 +52,15 @@ try {
   const rootDir = path.join(
     process.cwd(),
     'user',
-    "${basePath}")
+    "${basePath}",
+    '..',
+    '..'
+  )
   process.chdir(rootDir)
-
-console.log('given rootdir', rootDir)
-console.log('contents of local dir is', fs.readdirSync('.'))
-console.log('absolute path of local dir is', __dirname)
-console.log('cwd', process.cwd())
 
   listener = require(path.join(
     rootDir,
-    'server/server.js'
+    '__sapper__/build/server/server.js'
   ));
 
   if (listener.default) {
