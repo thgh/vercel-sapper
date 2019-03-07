@@ -24,14 +24,6 @@ exports.config = {
 exports.build = async ({ files, entrypoint, workPath }) => {
   // move all user code to 'user' subdirectory
   const basePath = path.dirname(entrypoint)
-  console.log('aaaa- desired entrypoint', path.join(
-    'user',
-    basePath,
-    'server/server.js'
-  ))
-  console.log('f', files)
-  console.log('u', userFiles)
-  console.log('upath', workPath)
   const userFiles = rename(files, name => path.join('user', basePath, name))
   const userPath = path.join(workPath, 'user');
   
