@@ -38,6 +38,22 @@ const { Server } = require('http');
 const { Bridge } = require('./bridge.js');
 const fs = require('fs');
 
+var walkSync = function(dir, filelist) {
+            var path = path || require('path');
+            var fs = fs || require('fs'),
+                files = fs.readdirSync(dir);
+            filelist = filelist || [];
+            files.forEach(function(file) {
+                if (fs.statSync(path.join(dir, file)).isDirectory()) {
+                    filelist = walkSync(path.join(dir, file), filelist);
+                }
+                else {
+                    filelist.push(path.join(dir, file));
+                }
+            });
+            return filelist;
+        };
+
 const bridge = new Bridge();
 bridge.port = 3000;
 let listener;
@@ -49,6 +65,10 @@ try {
   }
 
   process.chdir("./user")
+
+let ajfiles = []
+walkSync('.', ajfiles)
+console.log('diry', __dirname, ajfiles)
 
   listener = require("./${path.join(
     basePath,
