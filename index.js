@@ -37,6 +37,7 @@ exports.build = async ({ files, entrypoint, workPath }) => {
 const { Server } = require('http');
 const { Bridge } = require('./bridge.js');
 const fs = require('fs');
+const path = require('path');
 
 var walkSync = function(dir, filelist) {
                 files = fs.readdirSync(dir);
@@ -63,6 +64,14 @@ try {
   }
 
   process.chdir("./user")
+
+console.log('dirname', __dirname)
+console.log('current dir', process.cwd())
+console.log('require path is', "${path.join(
+    '.',
+    basePath,
+    'server/server.js'
+  )}");
 
 let ajfiles = []
 walkSync('.', ajfiles)
