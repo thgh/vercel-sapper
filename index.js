@@ -69,6 +69,7 @@ console.log('dirname', __dirname)
 console.log('current dir', process.cwd())
 console.log('require path is', "${path.join(
     process.cwd(),
+    'user',
     basePath,
     'server/server.js'
   )}");
@@ -79,6 +80,7 @@ console.log('diry', process.cwd(), ajfiles)
 
   listener = require("${path.join(
     process.cwd(),
+    'user',
     basePath,
     'server/server.js'
   )}");
