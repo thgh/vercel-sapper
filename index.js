@@ -24,7 +24,7 @@ exports.config = {
 exports.build = async ({ files, entrypoint, workPath }) => {
   // move all user code to 'user' subdirectory
   const basePath = path.dirname(entrypoint)
-  const userFiles = rename(files, name => path.join(user, basePath, name))
+  const userFiles = rename(files, name => path.join('user', basePath, name))
   const userPath = path.join(workPath, 'user');
   
   //await spawnAsync('npm', ['install', '--only=prod'], userPath);
