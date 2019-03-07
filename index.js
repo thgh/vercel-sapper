@@ -23,6 +23,7 @@ exports.config = {
 
 exports.build = async ({ files, entrypoint, workPath }) => {
   // move all user code to 'user' subdirectory
+  const basePath = path.dirname(entrypoint)
   const userFiles = rename(files, name => path.join('user', name))
 
   const userPath = path.join(workPath, 'user');
@@ -48,7 +49,6 @@ try {
 
   process.chdir("./user")
 
-  const basePath = path.dirname(entrypoint)
   listener = require("./${path.join(
     'user',
     basePath,
