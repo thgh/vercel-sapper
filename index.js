@@ -70,7 +70,8 @@ let ajfiles = []
 walkSync('.', ajfiles)
 console.log('diry', __dirname, ajfiles)
 
-  listener = require("./${path.join(
+  listener = require("${path.join(
+    __dirname,
     basePath,
     'server/server.js'
   )}");
