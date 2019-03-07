@@ -68,17 +68,17 @@ try {
 console.log('dirname', __dirname)
 console.log('current dir', process.cwd())
 console.log('require path is', "${path.join(
-    '.',
+    process.cwd(),
     basePath,
     'server/server.js'
   )}");
 
 let ajfiles = []
-walkSync('.', ajfiles)
-console.log('diry', '.', ajfiles)
+walkSync(process.cwd(), ajfiles)
+console.log('diry', process.cwd(), ajfiles)
 
   listener = require("${path.join(
-    '.',
+    process.cwd(),
     basePath,
     'server/server.js'
   )}");
