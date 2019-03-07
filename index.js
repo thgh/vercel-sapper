@@ -22,7 +22,6 @@ exports.config = {
 }
 
 exports.build = async ({ files, entrypoint, workPath }) => {
-  console.log('entry point', entrypoint)
   // move all user code to 'user' subdirectory
   const userFiles = rename(files, name => path.join('user', name))
 
@@ -49,9 +48,11 @@ try {
 
   process.chdir("./user")
 
+  const basePath = path.dirname(entrypoint)
   listener = require("./${path.join(
     'user',
-    '__sapper__/build/server/server.js'
+    basePath,
+    'server/server.js'
   )}");
 
   if (listener.default) {
