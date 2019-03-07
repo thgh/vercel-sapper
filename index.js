@@ -66,13 +66,16 @@ try {
   const rootDir = path.join(
     process.cwd(),
     'user',
-    basePath)
+    "${basePath}")
   process.chdir(rootDir)
 
+console.log('given rootdir', rootDir)
+console.log('contents of local dir is', fs.readdirSync('.'))
+console.log('absolute path of local dir is', __dirname)
+console.log('cwd', process.cwd())
+
   listener = require("${path.join(
-    process.cwd(),
-    'user',
-    basePath,
+    rootDir,
     'server/server.js'
   )}");
 
