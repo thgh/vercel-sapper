@@ -54,6 +54,7 @@ try {
     basePath,
     'server/server.js'
   )}");
+console.log('listener is', listener);
 
   if (listener.default) {
     listener = listener.default;
