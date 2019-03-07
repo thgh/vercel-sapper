@@ -30,6 +30,9 @@ exports.build = async ({ files, entrypoint, workPath }) => {
     'server/server.js'
   ))
   const userFiles = rename(files, name => path.join('user', name))
+  console.log('f', files)
+  console.log('u', userFiles)
+  console.log('upath', workPath)
   const userPath = path.join(workPath, 'user');
   
   //await spawnAsync('npm', ['install', '--only=prod'], userPath);
