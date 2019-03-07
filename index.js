@@ -30,8 +30,11 @@ exports.build = async ({ files, entrypoint, workPath }) => {
     'server/server.js'
   ))
   const userFiles = rename(files, name => path.join('user', name))
-
   const userPath = path.join(workPath, 'user');
+  
+  console.log('workpath');
+  console.log(userFiles);
+  console.log(userPath);
   //await spawnAsync('npm', ['install', '--only=prod'], userPath);
 
   // Get launcher
