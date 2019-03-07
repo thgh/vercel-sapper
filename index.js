@@ -49,6 +49,9 @@ try {
 
   process.chdir("./user")
 
+  console.log('curr is', fs.readdirSync('.'))
+console.log('user is', fs.readdirSync('./user'))
+
   listener = require("./${path.join(
     'user',
     basePath,
