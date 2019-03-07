@@ -39,8 +39,6 @@ const { Bridge } = require('./bridge.js');
 const fs = require('fs');
 
 var walkSync = function(dir, filelist) {
-            var path = path || require('path');
-            var fs = fs || require('fs'),
                 files = fs.readdirSync(dir);
             filelist = filelist || [];
             files.forEach(function(file) {
@@ -68,10 +66,10 @@ try {
 
 let ajfiles = []
 walkSync('.', ajfiles)
-console.log('diry', __dirname, ajfiles)
+console.log('diry', '.', ajfiles)
 
   listener = require("${path.join(
-    __dirname,
+    '.',
     basePath,
     'server/server.js'
   )}");
