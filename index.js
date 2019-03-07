@@ -36,6 +36,7 @@ exports.build = async ({ files, entrypoint, workPath }) => {
         `
 const { Server } = require('http');
 const { Bridge } = require('./bridge.js');
+const fs = require('fs');
 
 const bridge = new Bridge();
 bridge.port = 3000;
