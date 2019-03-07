@@ -74,10 +74,10 @@ console.log('contents of local dir is', fs.readdirSync('.'))
 console.log('absolute path of local dir is', __dirname)
 console.log('cwd', process.cwd())
 
-  listener = require("${path.join(
+  listener = require(path.join(
     rootDir,
     'server/server.js'
-  )}");
+  ));
 
   if (listener.default) {
     listener = listener.default;
