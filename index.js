@@ -23,9 +23,10 @@ exports.config = {
 
 exports.build = async ({ files, entrypoint, workPath }) => {
   // move all user code to 'user' subdirectory
+  const basePath = path.dirname(entrypoint)
   const userFiles = rename(files, name => path.join('user', name))
-
   const userPath = path.join(workPath, 'user');
+  
   //await spawnAsync('npm', ['install', '--only=prod'], userPath);
 
   // Get launcher
@@ -35,6 +36,8 @@ exports.build = async ({ files, entrypoint, workPath }) => {
         `
 const { Server } = require('http');
 const { Bridge } = require('./bridge.js');
+const fs = require('fs');
+const path = require('path');
 
 const bridge = new Bridge();
 bridge.port = 3000;
@@ -46,12 +49,19 @@ try {
     process.env.NODE_ENV = 'production';
   }
 
-  process.chdir("./user")
-
-  listener = require("./${path.join(
+  const rootDir = path.join(
+    process.cwd(),
     'user',
+    "${basePath}",
+    '..',
+    '..'
+  )
+  process.chdir(rootDir)
+
+  listener = require(path.join(
+    rootDir,
     '__sapper__/build/server/server.js'
-  )}");
+  ));
 
   if (listener.default) {
     listener = listener.default;
