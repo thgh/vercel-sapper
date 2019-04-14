@@ -28,13 +28,22 @@ Example `now.json`
 }
 ```
 
-Recommended ignore:
+Recommended `.nowignore`:
+```
+__sapper__/dev
+__sapper__/export
+cypress
+node_modules
+src
+```
+
+Previous recommended `.nowignore`
 ```bash
-# .nowignore
 *
 !static
 !static/
 !__sapper__
 !__sapper__/
+!__sapper__/build
 __sapper__/dev
 ```
