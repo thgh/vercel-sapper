@@ -46,6 +46,6 @@ exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = 
     { src: '/(.*)', dest: '/' }
   ]
   
-  // return { output, routes }
-  return output
+  return { output, routes }
+  // return output
 }
