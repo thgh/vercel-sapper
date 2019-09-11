@@ -17,9 +17,7 @@ exports.config = {
 exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = {} }) => {
   const mountpoint = getMountPoint(entrypoint)
   const entrypointDir = path.join(workPath, mountpoint)
-  const up = await download(files, workPath, meta)
-
-  console.dir(up)
+  await download(files, workPath, meta)
 
   process.chdir(entrypointDir)
 
@@ -36,16 +34,13 @@ exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = 
     runtime: config.runtime
   })
 
-
   const output = { 
     index: lambda
   }
 
   const routes = [
-    // ...Object.keys(staticFiles).map(file => ({ src: `/${file}`, headers: { 'Cache-Control': 'max-age=31557600' } })),
     { src: '/(.*)', dest: '/' }
   ]
   
   return { output, routes }
-  // return output
 }
