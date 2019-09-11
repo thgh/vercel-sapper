@@ -1,89 +1,112 @@
 const { createLambda } = require('@now/build-utils/lambda.js') // eslint-disable-line import/no-extraneous-dependencies
+const os = require('os') 
 const path = require('path')
-const rename = require('@now/build-utils/fs/rename.js') // eslint-disable-line import/no-extraneous-dependencies
+const fs = require('fs-extra')
 
-const FileBlob = require('@now/build-utils/file-blob.js');
-const FileFsRef = require('@now/build-utils/file-fs-ref.js');
-const fs = require('fs-extra');
+const {
+  download,
+  FileBlob,
+  FileFsRef,
+  runNpmInstall,
+  runPackageJsonScript,
+  glob
+} = require('@now/build-utils')
 
-const { spawn } = require('child_process');
-function spawnAsync(command, args, cwd) {
-  return new Promise((resolve, reject) => {
-    const child = spawn(command, args, { stdio: 'inherit', cwd });
-    child.on('error', reject);
-    child.on('close', (code, signal) => (code !== 0
-      ? reject(new Error(`Exited with ${code || signal}`))
-      : resolve()));
-  });
-}
+const bridge = require('@now/node-bridge')
 
 exports.config = {
   maxLambdaSize: '10mb'
 }
 
-exports.build = async ({ files, entrypoint, workPath }) => {
-  // move all user code to 'user' subdirectory
-  const basePath = path.dirname(entrypoint)
-  const userFiles = rename(files, name => path.join('user', name))
-  const userPath = path.join(workPath, 'user');
-  
-  //await spawnAsync('npm', ['install', '--only=prod'], userPath);
-
-  // Get launcher
-  const launcherFiles = {
-    'launcher.js': new FileBlob({
-      data:
-        `
-const { Server } = require('http');
-const { Bridge } = require('./bridge.js');
-const fs = require('fs');
-const path = require('path');
-
-const bridge = new Bridge();
-bridge.port = 3000;
-let listener;
-
-try {
-  process.env.PORT = bridge.port
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'production';
+function getConfig (rawConfig) {
+  return {
+    build: true,
+    runtime: 'nodejs8.10',
+    ...rawConfig
   }
-
-  const rootDir = path.join(
-    process.cwd(),
-    'user',
-    "${basePath}",
-    '..',
-    '..'
-  )
-  process.chdir(rootDir)
-
-  listener = require(path.join(
-    rootDir,
-    '__sapper__/build/server/server.js'
-  ));
-
-  if (listener.default) {
-    listener = listener.default;
-  }
-} catch (error) {
-  bridge.userError = error;
 }
 
-const server = new Server(listener);
-server.listen(bridge.port);
+async function npmBuild (config, entrypointDir, meta) {
+  if (config.build) {
+    await runNpmInstall(entrypointDir, ['--prefer-offline'], {}, meta)
+    await runPackageJsonScript(
+      entrypointDir,
+      'build',
+      {}
+    )
 
-exports.launcher = bridge.launcher;
-`
-    }),
-    'bridge.js': new FileFsRef({ fsPath: require('@now/node-bridge') })
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'now-'))
+
+    await fs.copy(
+      path.join(entrypointDir, 'package.json'),
+      path.join(tempDir, 'package.json')
+    )
+    
+    const originalDir = process.cwd()
+    process.chdir(tempDir)
+    await runNpmInstall(tempDir, ['--prefer-offline', '--production'], {}, meta)
+    process.chdir(originalDir)
+
+    return globAndPrefix(tempDir, 'node_modules')
+  }
+}
+
+function getLauncherFiles (mountpoint) {
+  const launcherPath = path.join(__dirname, 'lib', 'launcher.js')
+  const compiled = fs.readFileSync(launcherPath, { encoding: 'utf-8' }).replace(new RegExp('{mountpoint}', 'g'), mountpoint)
+  return {
+    'launcher.js': new FileBlob({ data: compiled }),
+    'bridge.js': new FileFsRef({ fsPath: bridge })
+  }
+}
+
+function getMountPoint (entrypoint) {
+  const entrypointName = path.basename(entrypoint)
+  if (entrypointName !== 'package.json') {
+    throw new Error('This builder requires a `package.json` file as its entrypoint.')
   }
 
+  return path.dirname(entrypoint)
+}
+
+async function globAndPrefix (entrypointDir, subDir) {
+  const paths = await glob('**', path.join(entrypointDir, subDir))
+  return Object.keys(paths).reduce((c, n) => {
+    c[`${subDir}/${n}`] = paths[n]
+    return c
+  }, {})
+}
+
+exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = {} }) => {
+  const mountpoint = getMountPoint(entrypoint)
+  const entrypointDir = path.join(workPath, mountpoint)
+  await download(files, workPath, meta)
+
+  process.chdir(entrypointDir)
+
+  const config = getConfig(rawConfig)
+  const prodDependencies = await npmBuild(config, entrypointDir)
+
+  const launcherFiles = getLauncherFiles(mountpoint)
+  const staticFiles = await globAndPrefix(entrypointDir, 'static')
+  const applicationFiles = await globAndPrefix(entrypointDir, '__sapper__')
+
   const lambda = await createLambda({
-    files: { ...userFiles, ...launcherFiles },
+    files: { ...staticFiles, ...launcherFiles, ...prodDependencies, ...applicationFiles },
     handler: 'launcher.launcher',
-    runtime: 'nodejs8.10'
+    runtime: config.runtime
   })
 
-  return { [entrypoint]: lambda }
+
+  const output = { 
+    index: lambda
+  }
+
+  const routes = [
+    // ...Object.keys(staticFiles).map(file => ({ src: `/${file}`, headers: { 'Cache-Control': 'max-age=31557600' } })),
+    { src: '/(.*)', dest: '/' }
+  ]
+  
+  // return { output, routes }
+  return output
 }
