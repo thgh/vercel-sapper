@@ -17,7 +17,9 @@ exports.config = {
 exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = {} }) => {
   const mountpoint = getMountPoint(entrypoint)
   const entrypointDir = path.join(workPath, mountpoint)
-  await download(files, workPath, meta)
+  const up = await download(files, workPath, meta)
+
+  console.dir(up)
 
   process.chdir(entrypointDir)
 
