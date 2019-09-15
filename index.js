@@ -49,13 +49,14 @@ exports.build = async ({
   })
 
   const output = {
-    ...serve(staticFiles, 'static', ''),
+    ...serve(staticFiles, 'static/', ''),
     ...serve(applicationFiles, '__sapper__/build/client', 'client'),
     index: lambda
   }
 
   const routes = [{ handle: 'filesystem' }, { src: '/(.*)', dest: '/' }]
   console.log('routes', routes)
+  console.log('output', Object.keys(output))
 
   return { output, routes }
 }
