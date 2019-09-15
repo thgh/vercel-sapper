@@ -39,10 +39,17 @@ Example `now.json`
 ```json
 {
   "version": 2,
-    "builds": [
-    { "src": "package.json", "use": "now-sapper", { build: false } }
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "now-sapper",
+      "config": {
+        "build": false
+      }
+    }
   ]
 }
+
 ```
 
 ### Changing the node runtime
@@ -53,10 +60,18 @@ Example `now.json`
 ```json
 {
   "version": 2,
-    "builds": [
-    { "src": "package.json", "use": "now-sapper", { runtime: 'nodejs10.x' } }
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "now-sapper",
+      "config": {
+        "runtime": "nodejs10.x"
+      }
+    }
   ]
 }
+
+```
 
 ## Preparation
 
