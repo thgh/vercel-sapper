@@ -41,14 +41,18 @@ exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = 
     index: lambda
   }
 
-  const routes = [
+  const routes = Object.keys(staticFiles).map(path => ({
+    src: '/' + path,
+    dest: '/' + path,
+  })).concat(
     {
       src: '/client/(.+)',
       dest: '/__sapper__/build/client/$1',
       headers: { 'cache-control': 'public,max-age=31536000,immutable' }
     },
     { src: '/(.*)', dest: '/' }
-  ]
+  )
+  console.log('routes', routes)
   
   return { output, routes }
 }
