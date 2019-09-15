@@ -1,12 +1,13 @@
 {
   "name": "now-sapper",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "license": "MIT",
   "description": "ZEIT Now v2.0 builder for Sapper",
   "main": "index.js",
   "files": [
     "index.js",
-    "lib"
+    "lib",
+    "yarn.lock"
   ],
   "dependencies": {
     "@now/node-bridge": "^1.2.5",
