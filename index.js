@@ -49,26 +49,22 @@ exports.build = async ({
   })
 
   const output = {
-    index: lambda,
-    ...staticFiles
+    ...serve(staticFiles, 'static', ''),
+    ...serve(applicationFiles, '__sapper__/build/client', 'client'),
+    index: lambda
   }
 
-  const routes = Object.keys(staticFiles)
-    .map(path => ({
-      src: path.replace('static/', '/'),
-      dest: path
-    }))
-    .concat(
-      // Object.keys(applicationFiles)
-      //   .filter(path => path.includes('__sapper__/build/client'))
-      //   .map(path => ({
-      //     src: path.replace('__sapper__/build/client/', '/'),
-      //     dest: path,
-      //     headers: { 'cache-control': 'public,max-age=31536000,immutable' }
-      //   })),
-      { src: '/(.*)', dest: '/' }
-    )
+  const routes = [{ handle: 'filesystem' }, { src: '/(.*)', dest: '/' }]
   console.log('routes', routes)
 
   return { output, routes }
+}
+
+function serve(arr, filePath, routePath) {
+  return Object.keys(arr)
+    .filter(path => path.startsWith(filePath))
+    .reduce((obj, key) => {
+      obj[key.replace(filePath, routePath)] = arr[key]
+      return obj
+    }, {})
 }
