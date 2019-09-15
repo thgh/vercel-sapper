@@ -8,8 +8,8 @@
     "index.js"
   ],
   "dependencies": {
-    "@now/node-bridge": "^0.1.10",
-    "fs-extra": "7.0.1"
+    "@now/node-bridge": "^1.2.5",
+    "fs-extra": "^8.1.0"
   },
   "peerDependencies": {
     "@now/build-utils": ">=0.0.1"
@@ -29,5 +29,6 @@
   "bugs": {
     "url": "https://github.com/thgh/now-sapper/issues"
   },
-  "homepage": "https://github.com/thgh/now-sapper#readme"
+  "homepage": "https://github.com/thgh/now-sapper#readme",
+  "devDependencies": {}
 }
