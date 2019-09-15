@@ -32,6 +32,9 @@ exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = 
     files: { ...staticFiles, ...launcherFiles, ...prodDependencies, ...applicationFiles },
     handler: 'launcher.launcher',
     runtime: config.runtime
+  }).catch(e => {
+    console.error('createLambda.error', e)
+    console.error('createLambda.config', config)
   })
 
   const output = { 
@@ -39,6 +42,11 @@ exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = 
   }
 
   const routes = [
+    {
+      src: '/client/(.+)',
+      dest: '/__sapper__/build/client/$1',
+      headers: { 'cache-control': 'public,max-age=31536000,immutable' }
+    },
     { src: '/(.*)', dest: '/' }
   ]
   
