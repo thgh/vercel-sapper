@@ -1,6 +1,6 @@
 {
   "name": "now-sapper",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "license": "MIT",
   "description": "ZEIT Now v2.0 builder for Sapper",
   "main": "index.js",
@@ -26,5 +26,9 @@
     "url": "https://github.com/thgh/now-sapper/issues"
   },
   "homepage": "https://github.com/thgh/now-sapper#readme",
-  "devDependencies": {}
+  "prettier": {
+    "trailingComma": "none",
+    "semi": false,
+    "singleQuote": true
+  }
 }

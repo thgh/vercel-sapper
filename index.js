@@ -14,7 +14,13 @@ exports.config = {
   maxLambdaSize: '10mb'
 }
 
-exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = {} }) => {
+exports.build = async ({
+  files,
+  entrypoint,
+  workPath,
+  config: rawConfig,
+  meta = {}
+}) => {
   const mountpoint = getMountPoint(entrypoint)
   const entrypointDir = path.join(workPath, mountpoint)
   await download(files, workPath, meta)
@@ -29,7 +35,12 @@ exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = 
   const applicationFiles = await globAndPrefix(entrypointDir, '__sapper__')
 
   const lambda = await createLambda({
-    files: { ...staticFiles, ...launcherFiles, ...prodDependencies, ...applicationFiles },
+    files: {
+      ...staticFiles,
+      ...launcherFiles,
+      ...prodDependencies,
+      ...applicationFiles
+    },
     handler: 'launcher.launcher',
     runtime: config.runtime
   }).catch(e => {
@@ -37,22 +48,26 @@ exports.build = async ({ files, entrypoint, workPath, config: rawConfig, meta = 
     console.error('createLambda.config', config)
   })
 
-  const output = { 
+  const output = {
     index: lambda
   }
 
-  const routes = Object.keys(staticFiles).map(path => ({
-    src: '/' + path,
-    dest: '/' + path,
-  })).concat(
-    {
-      src: '/client/(.+)',
-      dest: '/__sapper__/build/client/$1',
-      headers: { 'cache-control': 'public,max-age=31536000,immutable' }
-    },
-    { src: '/(.*)', dest: '/' }
-  )
+  const routes = Object.keys(staticFiles)
+    .map(path => ({
+      src: path.replace('static/', '/'),
+      dest: path
+    }))
+    .concat(
+      Object.keys(applicationFiles)
+        .filter(path => path.includes('build/client'))
+        .map(path => ({
+          src: path.replace('static/', '/'),
+          dest: path,
+          headers: { 'cache-control': 'public,max-age=31536000,immutable' }
+        })),
+      { src: '/(.*)', dest: '/' }
+    )
   console.log('routes', routes)
-  
+
   return { output, routes }
 }
