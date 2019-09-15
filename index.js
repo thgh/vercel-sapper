@@ -54,9 +54,15 @@ exports.build = async ({
     index: lambda
   }
 
-  const routes = [{ handle: 'filesystem' }, { src: '/(.*)', dest: '/' }]
-  console.log('routes', routes)
-  console.log('output', Object.keys(output))
+  const routes = [
+    {
+      src: '/client/.+\\.(css|js|map)',
+      headers: { 'cache-control': 'public,max-age=31536000,immutable' },
+      continue: true
+    },
+    { handle: 'filesystem' },
+    { src: '/(.*)', dest: '/' }
+  ]
 
   return { output, routes }
 }
