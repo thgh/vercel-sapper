@@ -12,12 +12,6 @@
     "@now/node-bridge": "^1.2.5",
     "fs-extra": "^8.1.0"
   },
-  "peerDependencies": {
-    "@now/build-utils": ">=0.0.1"
-  },
-  "scripts": {
-    "pub": "git add -A && yarn version --minor && npm publish"
-  },
   "repository": "https://github.com/thgh/now-sapper",
   "keywords": [
     "svelte",
