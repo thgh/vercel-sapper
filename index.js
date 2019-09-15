@@ -49,7 +49,8 @@ exports.build = async ({
   })
 
   const output = {
-    index: lambda
+    index: lambda,
+    ...staticFiles
   }
 
   const routes = Object.keys(staticFiles)
@@ -58,13 +59,13 @@ exports.build = async ({
       dest: path
     }))
     .concat(
-      Object.keys(applicationFiles)
-        .filter(path => path.includes('build/client'))
-        .map(path => ({
-          src: path.replace('static/', '/'),
-          dest: path,
-          headers: { 'cache-control': 'public,max-age=31536000,immutable' }
-        })),
+      // Object.keys(applicationFiles)
+      //   .filter(path => path.includes('__sapper__/build/client'))
+      //   .map(path => ({
+      //     src: path.replace('__sapper__/build/client/', '/'),
+      //     dest: path,
+      //     headers: { 'cache-control': 'public,max-age=31536000,immutable' }
+      //   })),
       { src: '/(.*)', dest: '/' }
     )
   console.log('routes', routes)
