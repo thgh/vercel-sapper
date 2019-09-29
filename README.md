@@ -2,6 +2,10 @@
 
 ## Usage
 
+### Demo / HowTo
+
+A [demo/how-to project](https://github.com/beyonk-adventures/now-sapper-demo) exists which uses this builder. It can be used as a template, or a way to verify correct usage of the following instructions.
+
 ### Basic usage
 
 Pushes the source to now, and builds the project.
