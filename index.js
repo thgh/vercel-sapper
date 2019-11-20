@@ -50,7 +50,7 @@ exports.build = async ({
 
   const output = {
     ...serve(staticFiles, 'static/', ''),
-    ...serve(applicationFiles, '__sapper__/build/service-worker.js', ''),
+    ...serve(applicationFiles, '__sapper__/build/service-worker.js', 'service-worker.js'),
     ...serve(applicationFiles, '__sapper__/build/client', 'client'),
     index: lambda
   }
