@@ -61,12 +61,12 @@ exports.build = async ({
       headers: { 'cache-control': 'public,max-age=31536000,immutable' },
       continue: true
     },
-    { handle: 'filesystem' },
     {
       src: '/service-worker.js',
-      headers: { 'cache-control': 'no-store' },
+      headers: { 'cache-control': 'public,max-age=0,must-revalidate' },
       continue: true
     },
+    { handle: 'filesystem' },
     { src: '/(.*)', dest: '/' }
   ]
 
