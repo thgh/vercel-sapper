@@ -50,6 +50,7 @@ exports.build = async ({
 
   const output = {
     ...serve(staticFiles, 'static/', ''),
+    ...serve(applicationFiles, '__sapper__/build/service-worker.js', ''),
     ...serve(applicationFiles, '__sapper__/build/client', 'client'),
     index: lambda
   }
@@ -61,6 +62,11 @@ exports.build = async ({
       continue: true
     },
     { handle: 'filesystem' },
+    {
+      src: '/service-worker.js',
+      headers: { 'cache-control': 'no-store' },
+      continue: true
+    },
     { src: '/(.*)', dest: '/' }
   ]
 
