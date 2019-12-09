@@ -58,23 +58,15 @@ Example `now.json`
 
 ### Changing the node runtime
 
-You can change the AWS lambda runtime from the default node 8
+You can change the Node.js version with the engines field.
 
-Example `now.json`
+Example `package.json`
 ```json
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "now-sapper",
-      "config": {
-        "runtime": "nodejs10.x"
-      }
-    }
-  ]
+  "engines": {
+    "node": "12.x"
+  }
 }
-
 ```
 
 ## Preparation
