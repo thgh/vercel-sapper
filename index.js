@@ -1,4 +1,4 @@
-const { createLambda } = require('@now/build-utils/lambda.js') // eslint-disable-line import/no-extraneous-dependencies
+const { createLambda, download, getNodeVersion, getSpawnOptions } = require('@now/build-utils') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const {
   getLauncherFiles,
@@ -8,7 +8,6 @@ const {
 
 const { getConfig } = require('./lib/config')
 const { npmBuild } = require('./lib/npm')
-const { download } = require('@now/build-utils')
 
 exports.config = {
   maxLambdaSize: '10mb'
@@ -28,11 +27,20 @@ exports.build = async ({
   process.chdir(entrypointDir)
 
   const config = getConfig(rawConfig)
-  const prodDependencies = await npmBuild(config, entrypointDir)
+  const nodeVersion = await getNodeVersion(
+    entrypointFsDirname,
+    undefined,
+    config
+  )
+  const spawnOpts = getSpawnOptions(meta, nodeVersion)
+  const prodDependencies = await npmBuild(config, entrypointDir, spawnOpts, meta)
 
   const launcherFiles = getLauncherFiles(mountpoint)
   const staticFiles = await globAndPrefix(entrypointDir, 'static')
   const applicationFiles = await globAndPrefix(entrypointDir, '__sapper__')
+
+  // Use the system-installed version of `node` when running via `now dev`
+  const runtime = meta.isDev ? 'nodejs' : nodeVersion.runtime
 
   const lambda = await createLambda({
     files: {
@@ -42,7 +50,7 @@ exports.build = async ({
       ...applicationFiles
     },
     handler: 'launcher.launcher',
-    runtime: config.runtime
+    runtime: runtime
   }).catch(e => {
     console.error('createLambda.error', e)
     console.error('createLambda.config', config)
