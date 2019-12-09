@@ -2,7 +2,7 @@
   "name": "now-sapper",
   "version": "0.36.0",
   "license": "MIT",
-  "description": "ZEIT Now v2.0 builder for Sapper",
+  "description": "ZEIT Now 2.0 builder for Sapper",
   "main": "index.js",
   "files": [
     "index.js",

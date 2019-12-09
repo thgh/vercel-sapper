@@ -71,7 +71,7 @@ Example `package.json`
 
 ## Preparation
 
-Your Sapper project must be adapted to work with Zeit Now v2, see https://github.com/thgh/sapper-template/commit/220307c800525633063df3e3373bc76d0e62cd86
+Your Sapper project must be adapted to work with ZEIT Now 2.0, see https://github.com/thgh/sapper-template/commit/220307c800525633063df3e3373bc76d0e62cd86
 
 For Express, the instance must be exported in `src/server.js`
 ```js
