@@ -28,8 +28,8 @@ exports.build = async ({
 
   const config = getConfig(rawConfig)
   const nodeVersion = await getNodeVersion(
-    entrypointFsDirname,
-    undefined,
+    entrypointDir,
+    null,
     config
   )
   const spawnOpts = getSpawnOptions(meta, nodeVersion)
