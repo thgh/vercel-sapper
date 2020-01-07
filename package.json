@@ -2,13 +2,16 @@
   "name": "now-sapper",
   "version": "0.38.0",
   "license": "MIT",
-  "description": "ZEIT Now 2.0 builder for Sapper",
+  "description": "ZEIT Now 2.0 builder for Sapper with SSR enabled",
   "main": "index.js",
   "files": [
     "index.js",
     "lib",
     "yarn.lock"
   ],
+  "scripts": {
+    "fix": "prettier --write index.js lib/*.js"
+  },
   "dependencies": {
     "@now/node-bridge": "^1.2.5",
     "fs-extra": "^8.1.0"
