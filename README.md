@@ -1,33 +1,64 @@
 # now-sapper
 
-## Usage
+ZEIT Now 2.0 builder for Sapper with SSR enabled
 
-### Demo / HowTo
+## What's in it for you?
 
-A [demo/how-to project](https://github.com/beyonk-adventures/now-sapper-demo) exists which uses this builder. It can be used as a template, or a way to verify correct usage of the following instructions.
+* [x] Deploy your Sapper app in 30 seconds.
+* [x] Serve all static assets from a CDN.
 
-### Basic usage
+## Basic usage
 
-Pushes the source to now, and builds the project.
+You must make 3 changes to your project to get started:
 
-Recommended `.nowignore`:
-```
-__sapper__
-cypress
-node_modules
-```
+1. Configure `now-sapper` as builder in `now.json`
+2. Export the server instance in `src/server.js`
+3. Ignore the local build folder `__sapper__`
 
-Example `now.json`
+Check out this [demo project](https://github.com/beyonk-adventures/now-sapper-demo) that uses this builder. It can be used as a template, or a way to verify correct usage of the following instructions.
+
+##### 1. Configure `now-sapper` as builder in `now.json`
+
 ```json
 {
   "version": 2,
-    "builds": [
-    { "src": "package.json", "use": "now-sapper" }
-  ],
+  "builds": [{ "src": "package.json", "use": "now-sapper" }]
 }
 ```
 
-### No-build usage
+##### 2. Export the server instance in `src/server.js`
+
+```js
+const app = express() // or polka()
+export default app
+```
+
+##### 3. Ignore the local build folder `__sapper__`
+
+Example `.nowignore` :
+```
+__sapper__
+node_modules
+```
+
+Consider also ignoring the `cypress` folder if you are not running tests.
+
+## Options
+
+##### Node.js version
+
+You can change the Node.js version with the engines field.
+
+Example `package.json`
+```json
+{
+  "engines": {
+    "node": "12.x"
+  }
+}
+```
+
+##### No-build usage
 
 Useful if you are building the project on CI, and then want to just push the compiled source.
 
@@ -53,34 +84,24 @@ Example `now.json`
     }
   ]
 }
-
 ```
 
-### Changing the node runtime
+## Troubleshooting
 
-You can change the Node.js version with the engines field.
+##### Using `fetch` serverside
 
-Example `package.json`
-```json
-{
-  "engines": {
-    "node": "12.x"
-  }
-}
-```
+Use absolute URLs, like this: https://github.com/thgh/now-sapper/issues/8#issuecomment-548860177
 
-## Preparation
+##### `now dev` doesn't work
 
-Your Sapper project must be adapted to work with ZEIT Now 2.0, see https://github.com/thgh/sapper-template/commit/220307c800525633063df3e3373bc76d0e62cd86
+True story, use `sapper dev` instead: https://github.com/thgh/now-sapper/issues/4#issuecomment-536189926
 
-For Express, the instance must be exported in `src/server.js`
-```js
-const app = express()
-export default app
-```
+## Changelog
 
-For Polka, the handler must be exported in `src/server.js`
-```js
-const app = polka()
-export default app.handler
-```
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Contributing
+
+Contributions and feedback are very welcome.
+
+This project aims to enable developers to deploy to Now with minimal config. New features should be in line with other builders like [now-next](https://github.com/zeit/now/tree/master/packages/now-next).
