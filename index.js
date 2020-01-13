@@ -1,4 +1,9 @@
-const { createLambda, download, getNodeVersion, getSpawnOptions } = require('@now/build-utils') // eslint-disable-line import/no-extraneous-dependencies
+const {
+  createLambda,
+  download,
+  getNodeVersion,
+  getSpawnOptions
+} = require('@now/build-utils') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const {
   getLauncherFiles,
@@ -27,13 +32,14 @@ exports.build = async ({
   process.chdir(entrypointDir)
 
   const config = getConfig(rawConfig)
-  const nodeVersion = await getNodeVersion(
-    entrypointDir,
-    null,
-    config
-  )
+  const nodeVersion = await getNodeVersion(entrypointDir, null, config)
   const spawnOpts = getSpawnOptions(meta, nodeVersion)
-  const prodDependencies = await npmBuild(config, entrypointDir, spawnOpts, meta)
+  const prodDependencies = await npmBuild(
+    config,
+    entrypointDir,
+    spawnOpts,
+    meta
+  )
 
   const launcherFiles = getLauncherFiles()
   const staticFiles = await globAndPrefix(entrypointDir, 'static')
@@ -58,7 +64,11 @@ exports.build = async ({
 
   const output = {
     ...serve(staticFiles, 'static/', ''),
-    ...serve(applicationFiles, '__sapper__/build/service-worker.js', 'service-worker.js'),
+    ...serve(
+      applicationFiles,
+      '__sapper__/build/service-worker.js',
+      'service-worker.js'
+    ),
     ...serve(applicationFiles, '__sapper__/build/client', 'client'),
     index: lambda
   }
