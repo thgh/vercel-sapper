@@ -88,10 +88,6 @@ Example `now.json`
 
 ## Troubleshooting
 
-##### Using `fetch` serverside
-
-Use absolute URLs, like this: https://github.com/thgh/now-sapper/issues/8#issuecomment-548860177
-
 ##### `now dev` doesn't work
 
 True story, use `sapper dev` instead: https://github.com/thgh/now-sapper/issues/4#issuecomment-536189926
