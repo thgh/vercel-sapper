@@ -100,4 +100,4 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 Contributions and feedback are very welcome.
 
-This project aims to enable developers to deploy to Vercel with minimal config. New features should be in line with other builders like [now-next](https://github.com/zeit/now/tree/master/packages/now-next).
+This project aims to enable developers to deploy to Vercel with minimal config. New features should be in line with other builders like [now-next](https://github.com/zeit/now/tree/master/packages/now-next). Please see the [Vercel Developer Reference](https://github.com/zeit/now/blob/master/DEVELOPING_A_RUNTIME.md) for more info.
