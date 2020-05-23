@@ -1,6 +1,6 @@
 {
   "name": "now-sapper",
-  "version": "0.39.0",
+  "version": "0.39.1",
   "license": "MIT",
   "description": "ZEIT Now 2.0 builder for Sapper with SSR enabled",
   "main": "index.js",
@@ -13,8 +13,8 @@
     "fix": "prettier --write index.js lib/*.js"
   },
   "dependencies": {
-    "@now/node-bridge": "^1.2.5",
-    "fs-extra": "^8.1.0"
+    "@now/node-bridge": "1.2.5",
+    "fs-extra": "8.1.0"
   },
   "repository": "https://github.com/thgh/now-sapper",
   "keywords": [
