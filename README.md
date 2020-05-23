@@ -30,6 +30,8 @@ Check out this [demo project](https://github.com/beyonk-adventures/now-sapper-de
 
 ```js
 const app = express() // or polka()
+// app.use(...)
+// app.listen(...)
 export default app
 ```
 
