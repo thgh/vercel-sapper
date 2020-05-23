@@ -45,7 +45,7 @@ Consider also ignoring the `cypress` folder if you are not running tests.
 
 #### 4. Running
 
-The `vercel` command will build and deploy your project for you.
+The `vercel` command will build and deploy your project for you. You must [download Vercel](https://vercel.com/download) by running `npm i -g vercel` before you run this command for the first time
 
 Run `sapper dev` for local development. [`vercel dev` does not work for local development](https://github.com/thgh/now-sapper/issues/4#issuecomment-536189926)
 
