@@ -3,7 +3,7 @@ const {
   download,
   getNodeVersion,
   getSpawnOptions
-} = require('@now/build-utils') // eslint-disable-line import/no-extraneous-dependencies
+} = require('@vercel/build-utils') // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path')
 const {
   getLauncherFiles,
@@ -45,7 +45,7 @@ exports.build = async ({
   const staticFiles = await globAndPrefix(entrypointDir, 'static')
   const applicationFiles = await globAndPrefix(entrypointDir, '__sapper__')
 
-  // Use the system-installed version of `node` when running via `now dev`
+  // Use the system-installed version of `node` when running via `vercel dev`
   const runtime = meta.isDev ? 'nodejs' : nodeVersion.runtime
 
   const lambda = await createLambda({

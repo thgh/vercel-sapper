@@ -1,6 +1,6 @@
-# now-sapper
+# vercel-sapper
 
-Vercel (fka ZEIT Now) 2.0 builder for Sapper with SSR enabled
+Vercel builder for Sapper with SSR enabled
 
 ## What's in it for you?
 
@@ -11,18 +11,18 @@ Vercel (fka ZEIT Now) 2.0 builder for Sapper with SSR enabled
 
 You must make 3 changes to your project to get started:
 
-1. Configure `now-sapper` as builder in `vercel.json`
+1. Configure `vercel-sapper` as builder in `vercel.json`
 2. Export the server instance in `src/server.js`
 3. Ignore the local build folder `__sapper__`
 
 Check out this [demo project](https://github.com/beyonk-adventures/now-sapper-demo) that uses this builder. It can be used as a template, or a way to verify correct usage of the following instructions.
 
-##### 1. Configure `now-sapper` as builder in `vercel.json`
+##### 1. Configure `vercel-sapper` as builder in `vercel.json`
 
 ```json
 {
   "version": 2,
-  "builds": [{ "src": "package.json", "use": "now-sapper" }]
+  "builds": [{ "src": "package.json", "use": "vercel-sapper" }]
 }
 ```
 
@@ -43,11 +43,11 @@ node_modules
 
 Consider also ignoring the `cypress` folder if you are not running tests.
 
-#### 4. Running
+#### 4. Deploy to Vercel
 
-The `vercel` command will build and deploy your project for you. You must [download Vercel](https://vercel.com/download) by running `npm i -g vercel` before you run this command for the first time
+Run `vercel` to build and deploy your project. You can install the [vercel](https://vercel.com/download) cli by running `npm i -g vercel`
 
-Run `sapper dev` for local development. [`vercel dev` does not work for local development](https://github.com/thgh/now-sapper/issues/4#issuecomment-536189926)
+Run `sapper dev` for local development. [`vercel dev` does not work for local development](https://github.com/thgh/vercel-sapper/issues/4#issuecomment-536189926)
 
 ## Options
 
@@ -83,7 +83,7 @@ Example `vercel.json`
   "builds": [
     {
       "src": "package.json",
-      "use": "now-sapper",
+      "use": "vercel-sapper",
       "config": {
         "build": false
       }
@@ -100,4 +100,4 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 Contributions and feedback are very welcome.
 
-This project aims to enable developers to deploy to Vercel with minimal config. New features should be in line with other builders like [now-next](https://github.com/zeit/now/tree/master/packages/now-next). Please see the [Vercel Developer Reference](https://github.com/zeit/now/blob/master/DEVELOPING_A_RUNTIME.md) for more info.
+This project aims to enable developers to deploy to Vercel with minimal config. New features should be in line with other builders like [now-next](https://github.com/zeit/now/tree/master/packages/now-next). Please see the [now Developer Reference](https://github.com/zeit/now/blob/master/DEVELOPING_A_RUNTIME.md) for more info.

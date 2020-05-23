@@ -1,6 +1,10 @@
 # Changelog
 
-All notable changes to `now-sapper` will be documented in this file.
+All notable changes to `vercel-sapper` will be documented in this file.
+
+## 0.40.0 - 2020-05-23
+### Updated
+- Rename now-sapper to vercel-sapper
 
 ## 0.39.0 - 2020-02-09
 ### Fixed

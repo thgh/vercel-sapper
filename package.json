@@ -1,8 +1,8 @@
 {
-  "name": "now-sapper",
+  "name": "vercel-sapper",
   "version": "0.39.0",
   "license": "MIT",
-  "description": "ZEIT Now 2.0 builder for Sapper with SSR enabled",
+  "description": "Vercel builder for Sapper with SSR enabled",
   "main": "index.js",
   "files": [
     "index.js",
@@ -13,22 +13,21 @@
     "fix": "prettier --write index.js lib/*.js"
   },
   "dependencies": {
-    "@now/node-bridge": "^1.2.5",
+    "@vercel/node-bridge": "^1.3.0",
     "fs-extra": "^8.1.0"
   },
-  "repository": "https://github.com/thgh/now-sapper",
+  "repository": "https://github.com/thgh/vercel-sapper",
   "keywords": [
     "svelte",
     "sapper",
-    "now",
-    "builder",
-    "zeit"
+    "vercel",
+    "builder"
   ],
   "author": "Thomas Ghysels",
   "bugs": {
-    "url": "https://github.com/thgh/now-sapper/issues"
+    "url": "https://github.com/thgh/vercel-sapper/issues"
   },
-  "homepage": "https://github.com/thgh/now-sapper#readme",
+  "homepage": "https://github.com/thgh/vercel-sapper#readme",
   "prettier": {
     "trailingComma": "none",
     "semi": false,
