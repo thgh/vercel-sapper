@@ -2,6 +2,10 @@
 
 All notable changes to `vercel-sapper` will be documented in this file.
 
+## 0.41.0 - 2020-05-24
+### Updated
+- Add debug server when server instance isn't found
+
 ## 0.40.0 - 2020-05-23
 ### Updated
 - Rename now-sapper to vercel-sapper
