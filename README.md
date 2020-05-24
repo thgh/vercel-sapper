@@ -1,4 +1,4 @@
-# vercel-sapper
+# vercel-sapper (a.k.a. [now-sapper](https://github.com/thgh/now-sapper/tree/now))
 
 Vercel builder for Sapper with SSR enabled
 
