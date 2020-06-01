@@ -44,6 +44,26 @@ exports.build = async ({
   const launcherFiles = getLauncherFiles()
   const staticFiles = await globAndPrefix(entrypointDir, 'static')
   const applicationFiles = await globAndPrefix(entrypointDir, '__sapper__')
+  const includeFilesArray = await Promise.all(
+    config.include.map((path) => globAndPrefix(entrypointDir, path))
+  )
+  const includeFiles = includeFilesArray.reduce(
+    (all, files) => ({
+      ...all,
+      ...files
+    }),
+    {}
+  )
+
+  // To avoid a sirv error, add 1 file from the static folder
+  const sirvFix = !Object.keys(includeFiles).find((p) => p.startsWith('static'))
+  if (sirvFix) {
+    const first = Object.keys(staticFiles)[0]
+    if (first) {
+      includeFiles[first] = staticFiles[first]
+    }
+    console.log('vercel-sapper includeFiles', Object.keys(includeFiles))
+  }
 
   // Use the system-installed version of `node` when running via `vercel dev`
   const runtime = meta.isDev ? 'nodejs' : nodeVersion.runtime
@@ -51,15 +71,15 @@ exports.build = async ({
 
   const lambda = await createLambda({
     files: {
-      ...staticFiles,
+      ...includeFiles,
       ...launcherFiles,
       ...prodDependencies,
       ...applicationFiles
     },
     handler: 'launcher.launcher',
     runtime,
-    ...memory ? { memory } : {}
-  }).catch(e => {
+    ...(memory ? { memory } : {})
+  }).catch((e) => {
     console.error('createLambda.error', e)
     console.error('createLambda.config', config)
   })
@@ -95,7 +115,7 @@ exports.build = async ({
 
 function serve(arr, filePath, routePath) {
   return Object.keys(arr)
-    .filter(path => path.startsWith(filePath))
+    .filter((path) => path.startsWith(filePath))
     .reduce((obj, key) => {
       obj[key.replace(filePath, routePath)] = arr[key]
       return obj

@@ -71,6 +71,26 @@ Example `package.json`
 }
 ```
 
+##### Include files outside the `__sapper__` folder
+
+The static folder is always hosted on the Vercel CDN. Before v0.42 it was also included in the lambda function. Here is how to include it again:
+
+Example `vercel.json`
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "vercel-sapper",
+      "config": {
+        "include": ["static"]
+      }
+    }
+  ]
+}
+```
+
 ##### Memory Configuration
 
 You can change the amount of memory your lambda runs with. This is useful to optimise costs.
