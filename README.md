@@ -32,7 +32,7 @@ Check out this [demo project](https://github.com/beyonk-adventures/now-sapper-de
 const app = express() // or polka()
 // app.use(...)
 // app.listen(...)
-export default app
+export default app.handler
 ```
 
 ##### 3. Ignore the local build folder `__sapper__`
