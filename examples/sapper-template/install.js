@@ -19,9 +19,11 @@ async function clone () {
 
 async function patch () {
   replace({
-    regex: '^polka()',
+    regex: /polka\(\)/,
     replacement: 'export default polka()',
-    paths: ['src/server.js']
+    paths: [
+      join(__dirname, 'src', 'server.js')
+    ]
   })
 
   writeFileSync(
@@ -31,10 +33,7 @@ async function patch () {
   "builds": [
     {
       "src": "package.json",
-      "use": "vercel-sapper",
-      "config": {
-        "memory": 128
-      }
+      "use": "vercel-sapper"
     }
   ]
 }` 

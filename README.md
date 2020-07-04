@@ -15,7 +15,12 @@ You must make 3 changes to your project to get started:
 2. Export the server instance in `src/server.js`
 3. Ignore the local build folder `__sapper__`
 
-Check out this [demo project](https://github.com/beyonk-adventures/now-sapper-demo) that uses this builder. It can be used as a template, or a way to verify correct usage of the following instructions.
+To install a working example of a vercel-sapper template ready for deployment or development, see the `examples` directory.
+
+```
+cd examples/sapper-template
+node install.js
+```
 
 ##### 1. Configure `vercel-sapper` as builder in `vercel.json`
 
