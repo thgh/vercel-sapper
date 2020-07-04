@@ -32,5 +32,9 @@
     "trailingComma": "none",
     "semi": false,
     "singleQuote": true
+  },
+  "devDependencies": {
+    "degit": "^2.8.0",
+    "replace": "^1.2.0"
   }
 }

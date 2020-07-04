@@ -47,6 +47,7 @@ exports.build = async ({
 
   // Use the system-installed version of `node` when running via `vercel dev`
   const runtime = meta.isDev ? 'nodejs' : nodeVersion.runtime
+  const memory = config.memory || undefined
 
   const lambda = await createLambda({
     files: {
@@ -56,7 +57,8 @@ exports.build = async ({
       ...applicationFiles
     },
     handler: 'launcher.launcher',
-    runtime: runtime
+    runtime,
+    ...memory ? { memory } : {}
   }).catch(e => {
     console.error('createLambda.error', e)
     console.error('createLambda.config', config)

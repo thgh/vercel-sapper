@@ -66,6 +66,27 @@ Example `package.json`
 }
 ```
 
+##### Memory Configuration
+
+You can change the amount of memory your lambda runs with. This is useful to optimise costs.
+
+Note that reducing memory also reduces the amount of CPU available to the lambda, so try some values before you optimise too much.
+
+```json
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "vercel-sapper",
+      "config": {
+        "memory": 3008 // default, in megabytes
+      }
+    }
+  ]
+}
+```
+
 ##### No-build usage
 
 Useful if you are building the project on CI, and then want to just push the compiled source.
