@@ -2,4 +2,4 @@
 
 Go into the directory for the example you want to see, and run:
 
-`sh ./install.sh`
+`js ./install.js`
