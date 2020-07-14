@@ -85,12 +85,14 @@ Note that reducing memory also reduces the amount of CPU available to the lambda
       "src": "package.json",
       "use": "vercel-sapper",
       "config": {
-        "memory": 3008 // default, in megabytes
+        "memory": 3008
       }
     }
   ]
 }
 ```
+
+Where `builds[].config.memory` can be any value allowed by AWS Lambda.
 
 ##### No-build usage
 
