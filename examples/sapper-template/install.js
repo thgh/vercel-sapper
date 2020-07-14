@@ -6,7 +6,7 @@ const { writeFileSync, writeFile } = require('fs')
 const { join } = require('path')
 
 async function clone () {
-  const emitter = degit('sveltejs/sapper-template', {
+  const emitter = degit('sveltejs/sapper-template#rollup', {
     force: true
   })
 
