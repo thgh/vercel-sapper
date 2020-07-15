@@ -17,13 +17,8 @@ You must make 3 changes to your project to get started:
 
 Check out this [demo project](https://github.com/beyonk-adventures/now-sapper-demo) that uses this builder. It can be used as a template, or a way to verify correct usage of the following instructions.
 
-##### 1. Install `vercel-sapper` as part of `devDependencies`
 
-```bash
- npm install -D vercel-sapper
-```
-
-##### 2. Configure `vercel-sapper` as builder in `vercel.json`
+##### 1. Configure `vercel-sapper` as builder in `vercel.json`
 
 ```json
 {
@@ -31,8 +26,9 @@ Check out this [demo project](https://github.com/beyonk-adventures/now-sapper-de
   "builds": [{ "src": "package.json", "use": "vercel-sapper" }]
 }
 ```
+Note: You don't have to install it as any dependency in your project. Vercel build process will install it from npm. More about [builds](https://vercel.com/docs/configuration#project/builds).
 
-##### 3. Export the server instance in `src/server.js`
+##### 2. Export the server instance in `src/server.js`
 
 ```js
 const app = express() // or polka()
@@ -41,7 +37,7 @@ const app = express() // or polka()
 export default app
 ```
 
-##### 4. Ignore the local build folder `__sapper__`
+##### 3. Ignore the local build folder `__sapper__`
 
 Example `.vercelignore` :
 ```
@@ -51,7 +47,7 @@ node_modules
 
 Consider also ignoring the `cypress` folder if you are not running tests.
 
-#### 5. Deploy to Vercel
+#### 4. Deploy to Vercel
 
 Run `vercel` to build and deploy your project. You can install the [vercel](https://vercel.com/download) cli by running `npm i -g vercel`
 
