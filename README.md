@@ -7,7 +7,15 @@ Vercel builder for Sapper with SSR enabled
 * [x] Deploy your Sapper app as a Lambda in 30 seconds.
 * [x] Serve all static assets from a CDN.
 
-## Basic usage
+## Automatic configuration
+
+Run `npx vercel-sapper` on an existing project.
+
+Or create a new project with `npx vercel-sapper my-project`
+
+_🧪  This feature is experimental, let us know what you think => https://github.com/thgh/vercel-sapper/pull/47_
+
+## Manual configuration
 
 You must make 3 changes to your project to get started:
 
