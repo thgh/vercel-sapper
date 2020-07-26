@@ -6,7 +6,7 @@ const { join } = require('path')
 ;(async () => {
   console.log(
     yellow(
-      '🧪  This feature is experimental, let us know what you think' +
+      '🧪  This feature is experimental, let us know what you think ' +
         '=> https://github.com/thgh/vercel-sapper/pull/47\n'
     )
   )
