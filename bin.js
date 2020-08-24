@@ -50,8 +50,11 @@ function degit(dir) {
 
 async function patch(dir) {
   try {
-    const srcDir = fs.readdirSync(join(dir, 'src'))
-    const serverFile = srcDir.find((file) => file.includes('server'))
+    const serverFile = fs.existsSync(join(dir, 'src/server.js'))
+      ? 'src/server.js'
+      : fs.existsSync(join(dir, 'src/server.ts'))
+      ? 'src/server.ts'
+      : ''
 
     if (!serverFile) {
       throw new Error(
@@ -59,20 +62,14 @@ async function patch(dir) {
       )
     }
 
-    const server = fs.readFileSync(join(dir, `src/${serverFile}`), 'utf8')
+    const server = fs.readFileSync(join(dir, `${serverFile}`), 'utf8')
     fs.writeFileSync(
-      join(dir, `src/${serverFile}`),
+      join(dir, `${serverFile}`),
       patchServer(server, serverFile)
     )
-    console.log(green('Patched'), `src/${serverFile}`)
+    console.log(green('Patched'), `${serverFile}`)
   } catch (e) {
-    console.error(
-      red(
-        e.code === 'ENOENT'
-          ? 'No src folder found, is this really a Sapper project?'
-          : e.message
-      )
-    )
+    console.error(red(e.message))
   }
 
   try {
@@ -114,13 +111,13 @@ node_modules`
 
 function patchServer(server, serverFile) {
   if (server.includes('export default')) {
-    throw new Error(`src/${serverFile} was already patched`)
+    throw new Error(`${serverFile} was already patched`)
   }
   if (server.includes('module.exports')) {
-    throw new Error(`src/${serverFile} was already patched`)
+    throw new Error(`${serverFile} was already patched`)
   }
   if (!server.includes('polka()') && !server.includes('express()')) {
-    throw new Error(`src/${serverFile} should contain polka() or express()`)
+    throw new Error(`${serverFile} should contain polka() or express()`)
   }
 
   // Simplest case
@@ -140,7 +137,7 @@ function patchServer(server, serverFile) {
   }
 
   throw new Error(
-    `src/${serverFile} needs manual patch: https://www.npmjs.com/package/vercel-sapper#manual-configuration`
+    `${serverFile} needs manual patch: https://www.npmjs.com/package/vercel-sapper#manual-configuration`
   )
 }
 
