@@ -1,6 +1,6 @@
 {
   "name": "vercel-sapper",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "license": "MIT",
   "description": "Vercel builder for Sapper with SSR enabled",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "yarn.lock"
   ],
   "scripts": {
-    "fix": "prettier --write index.js lib/*.js"
+    "fix": "prettier --write ."
   },
   "dependencies": {
     "@vercel/node-bridge": "^1.3.0",

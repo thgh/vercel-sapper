@@ -62,12 +62,9 @@ async function patch(dir) {
       )
     }
 
-    const server = fs.readFileSync(join(dir, `${serverFile}`), 'utf8')
-    fs.writeFileSync(
-      join(dir, `${serverFile}`),
-      patchServer(server, serverFile)
-    )
-    console.log(green('Patched'), `${serverFile}`)
+    const server = fs.readFileSync(join(dir, serverFile), 'utf8')
+    fs.writeFileSync(join(dir, serverFile), patchServer(server, serverFile))
+    console.log(green('Patched'), serverFile)
   } catch (e) {
     console.error(red(e.message))
   }

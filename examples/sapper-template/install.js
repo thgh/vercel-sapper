@@ -5,25 +5,23 @@ const degit = require('degit')
 const { writeFileSync, writeFile } = require('fs')
 const { join } = require('path')
 
-async function clone () {
+async function clone() {
   const emitter = degit('sveltejs/sapper-template#rollup', {
     force: true
   })
 
-  emitter.on('info', info => {
+  emitter.on('info', (info) => {
     console.log(info.message)
   })
 
   return emitter.clone('.')
 }
 
-async function patch () {
+async function patch() {
   replace({
     regex: /polka\(\)/,
     replacement: 'export default polka()',
-    paths: [
-      join(__dirname, 'src', 'server.js')
-    ]
+    paths: [join(__dirname, 'src', 'server.js')]
   })
 
   writeFileSync(
@@ -36,21 +34,19 @@ async function patch () {
       "use": "vercel-sapper"
     }
   ]
-}` 
+}`
   )
 
   writeFileSync(
     join(__dirname, '.vercelignore'),
     `__sapper__
 cypress
-node_modules` 
+node_modules`
   )
 }
 
-function info () {
+function info() {
   console.log('Example installed. Deploy with `vercel`')
 }
 
-clone()
-  .then(patch)
-  .then(info)
+clone().then(patch).then(info)

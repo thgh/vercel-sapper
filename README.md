@@ -4,8 +4,8 @@ Vercel builder for Sapper with SSR enabled
 
 ## What's in it for you?
 
-* [x] Deploy your Sapper app as a Lambda in 30 seconds.
-* [x] Serve all static assets from a CDN.
+- [x] Deploy your Sapper app as a Lambda in 30 seconds.
+- [x] Serve all static assets from a CDN.
 
 ## Automatic configuration
 
@@ -13,7 +13,7 @@ Run `npx vercel-sapper` on an existing project.
 
 Or create a new project with `npx vercel-sapper my-project`
 
-_🧪  This feature is experimental, let us know what you think => https://github.com/thgh/vercel-sapper/pull/47_
+_🧪 This feature is experimental, let us know what you think => https://github.com/thgh/vercel-sapper/pull/47_
 
 ## Manual configuration
 
@@ -51,6 +51,7 @@ export default app
 ##### 3. Ignore the local build folder `__sapper__`
 
 Example `.vercelignore` :
+
 ```
 __sapper__
 node_modules
@@ -71,6 +72,7 @@ Run `sapper dev` for local development. [`vercel dev` does not work for local de
 You can change the Node.js version with the engines field.
 
 Example `package.json`
+
 ```json
 {
   "engines": {
@@ -84,6 +86,7 @@ Example `package.json`
 The static folder is always hosted on the Vercel CDN. Before v0.42 it was also included in the lambda function. Here is how to include it again:
 
 Example `vercel.json`
+
 ```json
 {
   "version": 2,
@@ -127,6 +130,7 @@ Where `builds[].config.memory` can be any value allowed by AWS Lambda.
 Useful if you are building the project on CI, and then want to just push the compiled source.
 
 Recommended `.vercelignore`:
+
 ```
 __sapper__/dev
 __sapper__/export
@@ -135,6 +139,7 @@ node_modules
 ```
 
 Example `vercel.json`
+
 ```json
 {
   "version": 2,
