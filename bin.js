@@ -50,14 +50,24 @@ function degit(dir) {
 
 async function patch(dir) {
   try {
-    if (!fs.existsSync(join(dir, 'src/server.js'))) {
+    const serverFile = fs.existsSync(join(dir, 'src/server.js'))
+      ? 'src/server.js'
+      : fs.existsSync(join(dir, 'src/server.ts'))
+      ? 'src/server.ts'
+      : ''
+
+    if (!serverFile) {
       throw new Error(
-        'expected src/server.js to exist, is this really a Sapper project?'
+        `Expected src/server.{js|ts} to exist, is this really a Sapper project?`
       )
     }
-    const server = fs.readFileSync(join(dir, 'src/server.js'), 'utf8')
-    fs.writeFileSync(join(dir, 'src/server.js'), patchServer(server))
-    console.log(green('Patched'), 'src/server.js')
+
+    const server = fs.readFileSync(join(dir, `${serverFile}`), 'utf8')
+    fs.writeFileSync(
+      join(dir, `${serverFile}`),
+      patchServer(server, serverFile)
+    )
+    console.log(green('Patched'), `${serverFile}`)
   } catch (e) {
     console.error(red(e.message))
   }
@@ -99,15 +109,15 @@ node_modules`
   }
 }
 
-function patchServer(server) {
+function patchServer(server, serverFile) {
   if (server.includes('export default')) {
-    throw new Error('src/server.js was already patched')
+    throw new Error(`${serverFile} was already patched`)
   }
   if (server.includes('module.exports')) {
-    throw new Error('src/server.js was already patched')
+    throw new Error(`${serverFile} was already patched`)
   }
   if (!server.includes('polka()') && !server.includes('express()')) {
-    throw new Error('src/server.js should contain polka() or express()')
+    throw new Error(`${serverFile} should contain polka() or express()`)
   }
 
   // Simplest case
@@ -127,7 +137,7 @@ function patchServer(server) {
   }
 
   throw new Error(
-    'src/server.js needs manual patch: https://www.npmjs.com/package/vercel-sapper#manual-configuration'
+    `${serverFile} needs manual patch: https://www.npmjs.com/package/vercel-sapper#manual-configuration`
   )
 }
 
