@@ -1,6 +1,6 @@
 {
   "name": "vercel-sapper",
-  "version": "0.43.0",
+  "version": "0.44.0",
   "license": "MIT",
   "description": "Vercel builder for Sapper with SSR enabled",
   "main": "index.js",
